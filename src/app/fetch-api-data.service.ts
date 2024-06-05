@@ -15,7 +15,7 @@ type userDetails = {
   UserName: string;
   Email: string;
   Password: string;
-  Birthdate: Date;
+  Birthdate: string;
 };
 
 // Service to handle errors and extract response data
@@ -160,11 +160,16 @@ export class DirectorService extends ErrorAndResponseService {
   constructor(http: HttpClient) {
     super(http);
   }
-  public getDirectors(): Observable<any> {
+  /**
+   * Fetches details of a director by name.
+   * @param {string} directorName - The name of the director to fetch details for.
+   * @returns {Observable<any>} An observable containing the director details.
+   */
+  public getDirectors(directorName: string): Observable<any> {
     const token = localStorage.getItem('token');
 
     return this.http
-      .get(apiUrl + '/movies/directors', {
+      .get(apiUrl + '/directors/' + directorName, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),

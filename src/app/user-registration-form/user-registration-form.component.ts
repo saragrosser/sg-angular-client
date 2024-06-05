@@ -13,7 +13,7 @@ export class UserRegistrationFormComponent implements OnInit {
     UserName: '',
     Password: '',
     Email: '',
-    Birthdate: new Date(), // Initialize as a Date object
+    Birthdate: '', // Initialize as a string
   };
   constructor(
     public fetchApiData: UserRegistrationService,
@@ -25,15 +25,16 @@ export class UserRegistrationFormComponent implements OnInit {
   // This is the function responsible for sending the form inputs to the backend
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe(
-      (result) => {
-        // Logic for a successful user registration goes here! (To be implemented)
+      (response) => {
+        // Logic for a successful user registration goes here!
         this.dialogRef.close(); // This will close the modal on success!
-        this.snackBar.open(result, 'OK', {
+        this.snackBar.open('User registered successfully!', 'OK', {
           duration: 2000,
         });
       },
-      (result) => {
-        this.snackBar.open(result, 'OK', {
+      (error) => {
+        // Display error message in the snackbar
+        this.snackBar.open(`Error: ${error.error.message}`, 'OK', {
           duration: 2000,
         });
       }
